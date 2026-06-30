@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="apple-touch-icon" href="parikino-icon.png">
+<link rel="icon" href="parikino-icon.png">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Parikino Marae — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--lead:#2196D3;--run:#4CAF50;--build:#FFEB3B;--fund:#F5820A;--four:#E53935;--korero:#7C3AED;--docs:#0891B2;--book:#0D9488;--hapu:#7C3AED;--red:#C0392B;--text:#111827;--sub:#6B7280;--border:#E5E7EB;--bg:#F7F7F5;--white:#FFFFFF}
+body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:80px}
+.demo-banner{background:#FEF3C7;border-bottom:1px solid #FDE68A;padding:8px 18px;font-size:12px;color:#92400E;text-align:center}
+.topbar{background:var(--white);border-bottom:2px solid var(--red);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.topbar-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;letter-spacing:-0.02em}
+.topbar-brand span{color:var(--red)}
+.demo-pill{background:#FEF3C7;color:#B45309;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid #FDE68A}
+.home-header{background:var(--white);border-bottom:1px solid var(--border);padding:20px 18px 18px;margin-bottom:4px}
+.home-trust{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--sub);margin-bottom:4px}
+.home-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.home-version{font-size:12px;color:var(--sub);margin-top:4px}
+.status-row{padding:12px 18px;display:flex;gap:8px;overflow-x:auto;background:var(--white);border-bottom:1px solid var(--border);margin-bottom:4px}
+.status-row::-webkit-scrollbar{display:none}
+.spill{border-radius:999px;padding:7px 13px;white-space:nowrap;font-size:12px;font-weight:600}
+.section-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);padding:16px 18px 8px}
+.fw-card{background:var(--white);border-radius:16px;margin:0 18px 10px;overflow:hidden;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.fw-card-body{padding:16px 16px 14px}
+.fw-pill{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.01em;margin-bottom:10px;line-height:1}
+.fw-card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.2}
+.fw-card-sub{font-size:13px;color:var(--sub);margin-top:4px;line-height:1.4}
+.fw-card-link{font-size:12px;font-weight:600;margin-top:10px;display:inline-flex;align-items:center;gap:4px}
+.fw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px;margin-bottom:10px}
+.fw-grid-card{background:var(--white);border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.fw-grid-body{padding:13px 13px 11px}
+.fw-grid-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;line-height:1.2}
+.fw-grid-sub{font-size:11px;color:var(--sub);margin-top:3px;line-height:1.35}
+.fw-grid-pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.01em;margin-bottom:8px;line-height:1}
+.section-header{padding:22px 18px 16px;border-bottom:1px solid var(--border);background:var(--white);margin-bottom:16px}
+.section-header-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub)}
+.page-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.2}
+.page-sub{font-size:13px;color:var(--sub);margin-top:5px;line-height:1.5}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 13px;margin:14px 18px 0;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500}
+.icard{background:var(--white);border:1px solid var(--border);border-radius:14px;margin:0 18px 10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding:12px 0;align-items:flex-start}
+.row:last-child{border-bottom:0}
+.rowtext{flex:1}
+.rowtext strong{font-size:14px;font-weight:600}
+.rowtext small{display:block;color:var(--sub);margin-top:3px;font-size:12px;line-height:1.4}
+.tag{border-radius:6px;padding:4px 9px;font-size:11px;font-weight:600;white-space:nowrap;align-self:flex-start}
+.tag-green{background:#DCFCE7;color:#15803D}
+.tag-yellow{background:#FFEB3B;color:#111}
+.tag-red{background:#FEE2E2;color:#B91C1C}
+.tag-blue{background:#DBEAFE;color:#1D4ED8}
+.tag-black{background:#F3F4F6;color:#374151}
+.tag-teal{background:#CCFBF1;color:#0F766E}
+.booking-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;border-left:3px solid var(--book)}
+.booking-card-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--book);margin-bottom:4px}
+.booking-card-title{font-size:15px;font-weight:600}
+.booking-card-meta{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.5}
+.hui-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;border-left:3px solid var(--lead);cursor:pointer}
+.hui-card-date{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--lead);margin-bottom:4px}
+.hui-card-title{font-size:15px;font-weight:600}
+.hui-card-meta{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.5}
+.purpose-box{border-radius:10px;padding:13px 14px;margin:0 18px 10px;border-left:3px solid}
+.purpose-box-title{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:5px}
+.purpose-box-text{font-size:13px;line-height:1.6}
+.progress{height:4px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:12px}
+.bar{height:100%;border-radius:999px}
+.month-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--sub);padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.view{display:none}
+.view.active{display:block}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-brand">Parikino <span>OS</span></div>
+  <span class="demo-pill">DEMO</span>
+</div>
+<div class="demo-banner">📱 Demo mode — sample data only. No real trustee information shown.</div>
+
+<div id="view-home" class="view active">
+  <div class="home-header">
+    <div class="home-trust">Parikino Marae — Demo</div>
+    <div class="home-title">Marae Dashboard</div>
+    <div class="home-version">Trustee working framework — Demo Version</div>
+  </div>
+  <div class="status-row">
+    <div class="spill" style="background:#DCFCE7;color:#15803D">🟢 7 In Progress</div>
+    <div class="spill" style="background:#FEE2E2;color:#B91C1C">🔴 2 Needs Attention</div>
+    <div class="spill" style="background:#CCFBF1;color:#0F766E">📅 5 Bookings</div>
+    <div class="spill" style="background:#CCFBF1;color:#0F766E">✅ 1 Done</div>
+  </div>
+  <div class="section-label">FRAMEWORK</div>
+  <div class="fw-card" style="border:2px solid var(--lead)" onclick="showView('lead')">
+    <div class="fw-card-body">
+      <div class="fw-pill" style="background:var(--lead);color:#fff">ara IT</div>
+      <div class="fw-card-title">Governance & Direction</div>
+      <div class="fw-card-sub">Trustee resolutions, policy, leadership decisions and strategic direction.</div>
+      <div class="fw-card-link" style="color:var(--lead)">Open ara IT →</div>
+    </div>
+  </div>
+  <div class="fw-card" style="border:2px solid var(--run)" onclick="showView('run')">
+    <div class="fw-card-body">
+      <div class="fw-pill" style="background:var(--run);color:#fff">mahi IT</div>
+      <div class="fw-card-title">Operations & Administration</div>
+      <div class="fw-card-sub">Day-to-day marae operations, bookings, maintenance and communications.</div>
+      <div class="fw-card-link" style="color:var(--run)">Open mahi IT →</div>
+    </div>
+  </div>
+  <div class="fw-card" style="border:2px solid var(--build)" onclick="showView('build')">
+    <div class="fw-card-body">
+      <div class="fw-pill" style="background:var(--build);color:#856500">rauemi IT</div>
+      <div class="fw-card-title">Projects & Development</div>
+      <div class="fw-card-sub">Capital works, building projects, digital development and infrastructure.</div>
+      <div class="fw-card-link" style="color:#856500">Open rauemi IT →</div>
+    </div>
+  </div>
+  <div class="fw-grid">
+    <div class="fw-grid-card" style="border:2px solid var(--fund)" onclick="showView('fund')">
+      <div class="fw-grid-body">
+        <div class="fw-grid-pill" style="background:var(--fund);color:#fff">tipu IT</div>
+        <div class="fw-grid-title">Funding & Grants</div>
+        <div class="fw-grid-sub">Applications & reporting</div>
+      </div>
+    </div>
+    <div class="fw-grid-card" style="border:2px solid var(--lead)" onclick="showView('hui')">
+      <div class="fw-grid-body">
+        <div class="fw-grid-pill" style="background:var(--lead);color:#fff">HUI</div>
+        <div class="fw-grid-title">Hui Register</div>
+        <div class="fw-grid-sub">Meetings & resolutions</div>
+      </div>
+    </div>
+    <div class="fw-grid-card" style="border:2px solid var(--book)" onclick="showView('bookings')">
+      <div class="fw-grid-body">
+        <div class="fw-grid-pill" style="background:var(--book);color:#fff">BOOKINGS</div>
+        <div class="fw-grid-title">Marae Bookings</div>
+        <div class="fw-grid-sub">5 upcoming events</div>
+      </div>
+    </div>
+    <div class="fw-grid-card" style="border:2px solid var(--hapu)" onclick="showView('hapu')">
+      <div class="fw-grid-body">
+        <div class="fw-grid-pill" style="background:var(--hapu);color:#fff">HAPŪ PŪKENGA</div>
+        <div class="fw-grid-title">Skills Register</div>
+        <div class="fw-grid-sub">5 registered</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-lead" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--lead)"></div><div class="eyebrow" style="color:var(--lead)">ARA IT</div></div>
+    <div class="page-title">Governance & Direction</div>
+    <div class="page-sub">Trustee resolutions, policy and strategic decisions.</div>
+  </div>
+  <div class="purpose-box" style="background:#2196D315;border-color:var(--lead)">
+    <div class="purpose-box-title" style="color:var(--lead)">ARA IT supports</div>
+    <div class="purpose-box-text" style="color:var(--lead)">Governance · Policy · Strategy · Compliance · Trustee direction</div>
+  </div>
+  <div style="margin:0 18px">
+    <div class="progress"><div class="bar" style="width:60%;background:var(--lead)"></div></div>
+    <div class="icard" style="margin:0">
+      <div class="row"><div class="rowtext"><strong>Review marae insurance policies</strong><small>Meet with broker 15 July</small></div><span class="tag tag-green">Moving</span></div>
+      <div class="row"><div class="rowtext"><strong>Update marae charter — digital governance clause</strong><small>Waiting on legal review</small></div><span class="tag tag-yellow">Waiting</span></div>
+      <div class="row"><div class="rowtext"><strong>Annual general meeting — agenda preparation</strong><small>Draft agenda by 10 July</small></div><span class="tag tag-blue">Scheduled</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="view-run" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--run)"></div><div class="eyebrow" style="color:var(--run)">MAHI IT</div></div>
+    <div class="page-title">Operations & Administration</div>
+    <div class="page-sub">Day-to-day marae operations and administration.</div>
+  </div>
+  <div class="purpose-box" style="background:#4CAF5015;border-color:var(--run)">
+    <div class="purpose-box-title" style="color:var(--run)">MAHI IT supports</div>
+    <div class="purpose-box-text" style="color:var(--run)">Bookings · Maintenance · Communications · Administration</div>
+  </div>
+  <div style="margin:0 18px">
+    <div class="progress"><div class="bar" style="width:45%;background:var(--run)"></div></div>
+    <div class="icard" style="margin:0">
+      <div class="row"><div class="rowtext"><strong>Kaumātua hui — quarterly wellbeing check</strong><small>Scheduled for 20 July · Kai provided</small></div><span class="tag tag-blue">Scheduled</span></div>
+      <div class="row"><div class="rowtext"><strong>Update website with new trustee photos</strong><small>Get photos from next hui</small></div><span class="tag tag-black">Future</span></div>
+      <div class="row"><div class="rowtext"><strong>Repair whare roof — north side</strong><small>Roofer booked for inspection</small></div><span class="tag tag-red">Attention</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="view-build" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--build)"></div><div class="eyebrow" style="color:#856500">RAUEMI IT</div></div>
+    <div class="page-title">Projects & Development</div>
+    <div class="page-sub">Capital works, digital development and infrastructure.</div>
+  </div>
+  <div class="purpose-box" style="background:#FFEB3B20;border-color:var(--build)">
+    <div class="purpose-box-title" style="color:#856500">RAUEMI IT supports</div>
+    <div class="purpose-box-text" style="color:#856500">Capital works · Digital tools · Infrastructure · Property development</div>
+  </div>
+  <div style="margin:0 18px">
+    <div class="progress"><div class="bar" style="width:35%;background:var(--build)"></div></div>
+    <div class="icard" style="margin:0">
+      <div class="row"><div class="rowtext"><strong>Install new water tank — urupa</strong><small>Get 3 quotes by end of month</small></div><span class="tag tag-red">Attention</span></div>
+      <div class="row"><div class="rowtext"><strong>Wānanga — AI & digital skills for rangatahi</strong><small>Confirm date with Armi Robinson</small></div><span class="tag tag-green">Moving</span></div>
+      <div class="row"><div class="rowtext"><strong>Solar energy feasibility report</strong><small>Request EECA assessment · Potential $80k saving</small></div><span class="tag tag-black">Future</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="view-fund" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--fund)"></div><div class="eyebrow" style="color:var(--fund)">TIPU IT</div></div>
+    <div class="page-title">Funding & Delivery</div>
+    <div class="page-sub">Grants, fundraising and delivery tracking.</div>
+  </div>
+  <div class="purpose-box" style="background:#F5820A15;border-color:var(--fund)">
+    <div class="purpose-box-title" style="color:var(--fund)">TIPU IT supports</div>
+    <div class="purpose-box-text" style="color:var(--fund)">Grant applications · Fundraising · Accountability · Reporting</div>
+  </div>
+  <div style="margin:0 18px">
+    <div class="progress"><div class="bar" style="width:70%;background:var(--fund)"></div></div>
+    <div class="icard" style="margin:0">
+      <div class="row"><div class="rowtext"><strong>Apply for Lottery Grants Board funding</strong><small>Submit by 31 July · Infrastructure round</small></div><span class="tag tag-green">Moving</span></div>
+      <div class="row"><div class="rowtext"><strong>Annual accounts — Charities Commission</strong><small>Filed 30 June 2026</small></div><span class="tag tag-teal">Done</span></div>
+      <div class="row"><div class="rowtext"><strong>Solar feasibility report</strong><small>Potential $80k saving · Request EECA</small></div><span class="tag tag-black">Future</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="view-hui" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--lead)"></div><div class="eyebrow" style="color:var(--lead)">HUI REGISTER</div></div>
+    <div class="page-title">Hui & Resolutions</div>
+    <div class="page-sub">Meeting records, resolutions and actions.</div>
+  </div>
+  <div style="padding:0 18px">
+    <div class="hui-card" onclick="showView('hui-detail-1')">
+      <div class="hui-card-date">UPCOMING · 20 JULY 2026</div>
+      <div class="hui-card-title">Trustees Hui — July 2026</div>
+      <div class="hui-card-meta">📍 Parikino Marae Whare · 9:00 AM · Agenda includes digital strategy</div>
+    </div>
+    <div class="hui-card" onclick="showView('hui-detail-2')">
+      <div class="hui-card-date">COMPLETED · 28 JUNE 2026</div>
+      <div class="hui-card-title">Emergency Hui — Roof Repair</div>
+      <div class="hui-card-meta">📍 Parikino Marae Whare · 6:00 PM · 2 resolutions passed</div>
+    </div>
+    <div class="hui-card">
+      <div class="hui-card-date">COMPLETED · 15 JUNE 2026</div>
+      <div class="hui-card-title">Trustees Hui — June 2026</div>
+      <div class="hui-card-meta">📍 Parikino Marae Whare · 10:00 AM · 2 resolutions passed</div>
+    </div>
+  </div>
+</div>
+
+<div id="view-hui-detail-1" class="view">
+  <button class="back-btn" onclick="showView('hui')">← Hui Register</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--lead)"></div><div class="eyebrow" style="color:var(--lead)">HUI</div></div>
+    <div class="page-title">Emergency Hui — Roof Repair</div>
+    <div class="page-sub">Mon 28 June 2026 · 6:00 PM · Parikino Marae Whare</div>
+  </div>
+  <div class="icard">
+    <div style="font-size:12px;color:var(--sub);margin-bottom:4px">👤 Chair: <strong style="color:var(--text)">Aroha Māhaki</strong></div>
+    <div style="font-size:12px;color:var(--sub)">🙏 Opened with karakia</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.5;margin-top:8px">Urgent roof repair approved. Three quotes required before proceeding. Kupu AI wānanga also approved to go ahead during school holidays.</div>
+  </div>
+  <div style="padding:0 18px;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:0.08em">📋 Resolutions (2)</div>
+  <div style="padding:0 18px">
+    <div class="icard" style="margin:0 0 10px;background:#F0F7FF;border-color:#BFDBFE">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Authorise emergency roof repair</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.5">Repair to north side of whare authorised up to $8,500 · Owner: Rawiri Ngāta · Due 15 July</div>
+      <span class="tag tag-blue" style="margin-top:8px;display:inline-block">In Progress</span>
+    </div>
+    <div class="icard" style="margin:0;background:#F0F7FF;border-color:#BFDBFE">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Approve Kupu AI wānanga — school holidays</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.5">Free digital skills wānanga for rangatahi 13–17 approved to proceed · Owner: Aroha Māhaki</div>
+      <span class="tag" style="margin-top:8px;display:inline-block;background:#FEF3C7;color:#B45309">Open</span>
+    </div>
+  </div>
+</div>
+
+<div id="view-hui-detail-2" class="view">
+  <button class="back-btn" onclick="showView('hui')">← Hui Register</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--lead)"></div><div class="eyebrow" style="color:var(--lead)">HUI</div></div>
+    <div class="page-title">Trustees Hui — June 2026</div>
+    <div class="page-sub">Mon 15 June 2026 · 10:00 AM · Parikino Marae Whare</div>
+  </div>
+  <div class="icard">
+    <div style="font-size:12px;color:var(--sub);margin-bottom:4px">👤 Chair: <strong style="color:var(--text)">Aroha Māhaki</strong></div>
+    <div style="font-size:12px;color:var(--sub)">🙏 Opened by Tūhoe Parata</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.5;margin-top:8px">Quorum present. All resolutions passed unanimously.</div>
+  </div>
+  <div style="padding:0 18px;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:0.08em">📋 Resolutions (2)</div>
+  <div style="padding:0 18px">
+    <div class="icard" style="margin:0 0 10px;background:#F0F7FF;border-color:#BFDBFE">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Approve 2026–27 marae budget</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.5">Annual operating budget of $145,000 approved by majority vote · Owner: Hinerangi Tūhoe</div>
+      <span class="tag tag-green" style="margin-top:8px;display:inline-block">Complete</span>
+    </div>
+    <div class="icard" style="margin:0;background:#F0F7FF;border-color:#BFDBFE">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Proceed with Lottery Grants application</div>
+      <div style="font-size:12px;color:var(--sub);line-height:1.5">Agreed to submit for infrastructure funding · Owner: Hinerangi Tūhoe · Due 31 July</div>
+      <span class="tag tag-blue" style="margin-top:8px;display:inline-block">In Progress</span>
+    </div>
+  </div>
+</div>
+
+<div id="view-bookings" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--book)"></div><div class="eyebrow" style="color:var(--book)">MAHI IT</div></div>
+    <div class="page-title">Marae Bookings</div>
+    <div class="page-sub">5 upcoming bookings</div>
+  </div>
+  <div style="padding:0 18px">
+    <div class="month-label">JULY 2026</div>
+    <div class="booking-card"><div class="booking-card-type">Celebration</div><div class="booking-card-title">Tapa whānau reunion</div><div class="booking-card-meta">📅 Sat 12 July · 10:00 AM — Sun 13 July · 4:00 PM<br>👤 Hera Tapa · 021 555 1234</div></div>
+    <div class="booking-card"><div class="booking-card-type">Wānanga</div><div class="booking-card-title">Kupu AI Wānanga — Rangatahi</div><div class="booking-card-meta">📅 Wed 15 July · 11:00 AM — 4:00 PM<br>👤 Kelly · 021 555 5678</div></div>
+    <div class="booking-card"><div class="booking-card-type">Hui</div><div class="booking-card-title">Quarterly Trustees Hui</div><div class="booking-card-meta">📅 Sun 20 July · 9:00 AM — 1:00 PM<br>👤 Aroha Māhaki</div></div>
+    <div class="month-label">AUGUST 2026</div>
+    <div class="booking-card"><div class="booking-card-type">Tangihanga</div><div class="booking-card-title">Rangimārie tangihanga</div><div class="booking-card-meta">📅 Mon 3 August · 9:00 AM — Wed 5 August · 2:00 PM<br>👤 Wiremu Rangimārie · 021 555 9999</div></div>
+    <div class="booking-card"><div class="booking-card-type">Sports Event</div><div class="booking-card-title">Kapa haka practice weekend</div><div class="booking-card-meta">📅 Sat 22 August · 8:00 AM — Sun 23 August · 5:00 PM<br>👤 Mere Hāpai · 021 555 3333</div></div>
+  </div>
+</div>
+
+<div id="view-hapu" class="view">
+  <button class="back-btn" onclick="showView('home')">← Dashboard</button>
+  <div class="section-header">
+    <div class="section-header-top"><div class="section-dot" style="background:var(--hapu)"></div><div class="eyebrow" style="color:var(--hapu)">HAPŪ PŪKENGA</div></div>
+    <div class="page-title">Skills Register</div>
+    <div class="page-sub">Whānau skills and expertise available to the marae.</div>
+  </div>
+  <div class="icard">
+    <div class="row"><div class="rowtext"><strong>Tūhoe Māhaki</strong><small>Ngāti Rangi · Building & Construction, Health & Safety · Kaumātua — cultural guidance</small></div><span class="tag tag-green">Active</span></div>
+    <div class="row"><div class="rowtext"><strong>Anahera Parata</strong><small>Ngāti Apa · Accounting, Grant Writing, Project Management · CPA — financial advice</small></div><span class="tag tag-green">Active</span></div>
+    <div class="row"><div class="rowtext"><strong>Rawiri Tūhoe</strong><small>Ngāti Hauiti · Plumbing, Electrical, Project Management · Licensed tradesperson</small></div><span class="tag tag-green">Active</span></div>
+    <div class="row"><div class="rowtext"><strong>Hinerangi Ngāta</strong><small>Ngāti Rangi · Teaching, Digital Skills, Youth Work · Secondary teacher</small></div><span class="tag tag-green">Active</span></div>
+    <div class="row"><div class="rowtext"><strong>Piripi Whaanga</strong><small>Ngāti Apa · Legal, Resource Management, Tikanga · Māori land law solicitor</small></div><span class="tag tag-green">Active</span></div>
+  </div>
+</div>
+
+<script>
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  var t=document.getElementById('view-'+id);
+  if(t){t.classList.add('active');window.scrollTo(0,0);}
+}
+</script>
+</body>
+</html>
